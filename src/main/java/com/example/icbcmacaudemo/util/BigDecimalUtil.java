@@ -31,12 +31,20 @@ public class BigDecimalUtil {
         return b1.multiply(b2);
     }
 
-    public static BigDecimal div(double v1, double v2) {
+    public static BigDecimal divHalfUp(double v1, double v2) {
         // v1 / v2
         BigDecimal b1 = new BigDecimal(Double.toString(v1));
         BigDecimal b2 = new BigDecimal(Double.toString(v2));
         // 2 = 保留小数点后两位   ROUND_HALF_UP = 四舍五入
         return b1.divide(b2, 2, RoundingMode.HALF_UP);// 应对除不尽的情况
+    }
+
+    public static BigDecimal divDown(double v1, double v2) {
+        // v1 / v2
+        BigDecimal b1 = new BigDecimal(Double.toString(v1));
+        BigDecimal b2 = new BigDecimal(Double.toString(v2));
+        // 2 = 保留小数点后两位   ROUND_HALF_UP = 四舍五入
+        return b1.divide(b2, 2, RoundingMode.DOWN);// 应对除不尽的情况
     }
 }
 

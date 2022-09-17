@@ -9,9 +9,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConcreteStrategy2 implements DiscountStrategy {
-
-
+public class NormalStrategy implements DiscountStrategy {
     @Override
     public Double discountAlgorithm(Bill bill) {
         List<Double> itemPriceList = getSingleItemCost(bill);
@@ -19,9 +17,6 @@ public class ConcreteStrategy2 implements DiscountStrategy {
         for (Double itemPrice : itemPriceList) {
             sum = BigDecimalUtil.add(sum, itemPrice).doubleValue();
         }
-        int count = 0;
-        count = BigDecimalUtil.divDown(sum, 100D).intValue();
-        sum = sum - (count * 10);
         return sum;
     }
 
@@ -40,4 +35,3 @@ public class ConcreteStrategy2 implements DiscountStrategy {
         return itemPriceList;
     }
 }
-

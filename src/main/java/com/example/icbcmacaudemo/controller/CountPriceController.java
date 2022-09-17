@@ -5,6 +5,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.example.icbcmacaudemo.bean.Bill;
 import com.example.icbcmacaudemo.bean.Commodity;
+import com.example.icbcmacaudemo.bean.DiscountStrategyFactory;
+import com.example.icbcmacaudemo.service.DiscountStrategy;
+import com.example.icbcmacaudemo.tool.Constant;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,21 +49,24 @@ public class CountPriceController {
         bill.setCommodityList(commodityList);
         bill.setQualityList(qualityList);
 
-        String flag = "1";
-        if (flag.equals(value1) && !flag.equals(value2)) {
-
-        }
-
-        if (!flag.equals(value1) && flag.equals(value2)) {
-
-        }
-
-        if (flag.equals(value1) && flag.equals(value2)) {
-
-        }
-
-        if (!flag.equals(value1) && !flag.equals(value2)){
-
+        String flag = value1 + value2;
+        switch (flag) {
+            case Constant.NORMAL_COUNT:
+                DiscountStrategy normalStrategy = DiscountStrategyFactory.createNormalStrategy();
+                normalStrategy.discountAlgorithm(bill);
+                break;
+            case Constant.DISCOUNT_STRATEGY1_ONLY:
+                DiscountStrategy strategy1 = DiscountStrategyFactory.createStrategy1();
+                strategy1.discountAlgorithm(bill);
+                break;
+            case Constant.DISCOUNT_STRATEGY2_ONLY:
+                DiscountStrategy strategy2 = DiscountStrategyFactory.createStrategy2();
+                strategy2.discountAlgorithm(bill);
+                break;
+            case Constant.DISCOUNT_STRATEGY1_AND_STRATEGY2:
+                DiscountStrategy strategy3 = DiscountStrategyFactory.createStrategy3();
+                strategy3.discountAlgorithm(bill);
+                break;
         }
 
         JSONObject result = new JSONObject();

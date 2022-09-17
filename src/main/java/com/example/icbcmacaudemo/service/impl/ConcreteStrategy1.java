@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConcreteStrategy1 implements DiscountStrategy {
+
     @Override
     public Double discountAlgorithm(Bill bill) {
         List<Double> itemPriceList = getSingleItemCost(bill);
@@ -29,8 +30,13 @@ public class ConcreteStrategy1 implements DiscountStrategy {
             double qty = Double.parseDouble(qualities.get(i).toString());
             BigDecimal itemPrice = new BigDecimal(0);
             itemPrice = BigDecimalUtil.mul(salePrice, qty);
+            if (commodities.get(i).getName().equals("草莓")) {
+                itemPrice = BigDecimalUtil.mul(itemPrice.doubleValue(), 0.8D);
+            }
             itemPriceList.add(itemPrice.doubleValue());
         }
+        bill.setItemPriceList(itemPriceList);
         return itemPriceList;
     }
+
 }
