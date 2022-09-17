@@ -18,6 +18,7 @@ public class ConcreteStrategy1 implements DiscountStrategy {
         for (Double itemPrice : itemPriceList) {
             sum = BigDecimalUtil.add(sum, itemPrice).doubleValue();
         }
+        bill.setTotalPrice(sum);
         return sum;
     }
 

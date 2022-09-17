@@ -22,6 +22,7 @@ public class ConcreteStrategy2 implements DiscountStrategy {
         int count = 0;
         count = BigDecimalUtil.divDown(sum, 100D).intValue();
         sum = sum - (count * 10);
+        bill.setTotalPrice(sum);
         return sum;
     }
 
