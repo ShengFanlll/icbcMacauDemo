@@ -11,7 +11,7 @@ import java.util.List;
 
 public class NormalStrategy implements DiscountStrategy {
     @Override
-    public Double discountAlgorithm(Bill bill) {
+    public Double discountAlgorithm(Bill bill) throws Exception {
         List<Double> itemPriceList = getSingleItemCost(bill);
         double sum = 0D;
         for (Double itemPrice : itemPriceList) {
@@ -21,7 +21,7 @@ public class NormalStrategy implements DiscountStrategy {
         return sum;
     }
 
-    public List<Double> getSingleItemCost(Bill bill) {
+    public List<Double> getSingleItemCost(Bill bill) throws Exception {
         List<Commodity> commodities = bill.getCommodityList();
         List<Integer> qualities = bill.getQualityList();
         List<Double> itemPriceList = new ArrayList<>();

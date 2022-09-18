@@ -20,7 +20,11 @@ import java.util.List;
 @RestController
 public class CountPriceController {
     @PostMapping("/getPrice")
-    public ResponseEntity<String> count(@RequestParam(value = "value1") String value1, @RequestParam(value = "value2") String value2, @RequestParam(value = "appleQty") String appleQty, @RequestParam(value = "strawberryQty") String strawberryQty, @RequestParam(value = "mangoQty") String mangoQty) {
+    public ResponseEntity<String> count(@RequestParam(value = "value1") String value1,
+                                        @RequestParam(value = "value2") String value2,
+                                        @RequestParam(value = "appleQty") String appleQty,
+                                        @RequestParam(value = "strawberryQty") String strawberryQty,
+                                        @RequestParam(value = "mangoQty") String mangoQty) {
         JSONObject result = new JSONObject();
         List<Commodity> commodityList = new ArrayList<>();
         List<Integer> qualityList = new ArrayList<>();
