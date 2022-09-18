@@ -1,9 +1,8 @@
 package com.example.icbcmacaudemo.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.example.icbcmacaudemo.bean.Bill;
+import com.example.icbcmacaudemo.bean.BillDetail;
 import com.example.icbcmacaudemo.bean.Commodity;
 import com.example.icbcmacaudemo.bean.DiscountStrategyFactory;
 import com.example.icbcmacaudemo.service.DiscountStrategy;
@@ -45,7 +44,6 @@ public class CountPriceController {
             commodityList.add(commodity2);
         }
 
-
         if (Integer.parseInt(mangoQty) > 0) {
             Commodity commodity3 = new Commodity();
             commodity3.setName("芒果");
@@ -56,6 +54,7 @@ public class CountPriceController {
 
         try {
             Bill bill = new Bill();
+            List<BillDetail> billDetailList = new ArrayList<>();
             if (qualityList.size() > 0) {
                 bill.setCommodityList(commodityList);
                 bill.setQualityList(qualityList);
@@ -64,26 +63,30 @@ public class CountPriceController {
                 switch (flag) {
                     case Constant.NORMAL_COUNT:
                         DiscountStrategy normalStrategy = DiscountStrategyFactory.createNormalStrategy();
-                        normalStrategy.discountAlgorithm(bill);
+                        normalStrategy.discountAlgorithm(bill, billDetailList);
                         break;
                     case Constant.DISCOUNT_STRATEGY1_ONLY:
                         DiscountStrategy strategy1 = DiscountStrategyFactory.createStrategy1();
-                        strategy1.discountAlgorithm(bill);
+                        strategy1.discountAlgorithm(bill, billDetailList);
                         break;
                     case Constant.DISCOUNT_STRATEGY2_ONLY:
                         DiscountStrategy strategy2 = DiscountStrategyFactory.createStrategy2();
-                        strategy2.discountAlgorithm(bill);
+                        strategy2.discountAlgorithm(bill, billDetailList);
                         break;
                     case Constant.DISCOUNT_STRATEGY1_AND_STRATEGY2:
                         DiscountStrategy strategy3 = DiscountStrategyFactory.createStrategy3();
-                        strategy3.discountAlgorithm(bill);
+                        strategy3.discountAlgorithm(bill, billDetailList);
                         break;
                 }
+
                 result.put("items", bill);
+                result.put("billDetailList", billDetailList);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new ResponseEntity<>(JSON.toJSONString(result, SerializerFeature.WriteDateUseDateFormat), HttpStatus.OK);
+        return new ResponseEntity<>(result.toJSONString(), HttpStatus.OK);
     }
 }
